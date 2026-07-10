@@ -1,0 +1,24 @@
+Thanks for installing Extractor!
+
+Extractor pulls structured tokens out of the current file (or your selection)
+and drops the de-duplicated results into a new file.
+
+Getting started
+---------------
+  1. Open the Command Palette (Ctrl/Cmd + Shift + P).
+  2. Run "Extractor: Extract to new file…".
+  3. Pick what to extract - emails, URLs, IPs, dates, UUIDs, secrets, a custom
+     regex, and more.
+
+You can also reach every extractor from:
+  * Tools > Extractor
+  * the right-click context menu (Extract)
+  * direct Command Palette entries, e.g. "Extractor: Emails"
+
+Settings
+--------
+  Preferences > Package Settings > Extractor > Settings
+  (toggle de-duplication, sorting, and whether to read the selection or the
+  whole file)
+
+Enjoy!

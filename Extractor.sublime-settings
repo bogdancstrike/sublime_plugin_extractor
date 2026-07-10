@@ -1,0 +1,19 @@
+{
+    // Remove duplicate results before writing the new file.
+    "unique": true,
+
+    // When de-duplicating, treat values that differ only in letter case as
+    // the same (e.g. "Example.com" and "example.com").
+    "case_insensitive_dedupe": true,
+
+    // Sort the results alphabetically. When false, results keep the order in
+    // which they first appear in the source.
+    "sort": false,
+
+    // Where to read from:
+    //   "auto"      - the current selection if there is one, otherwise the
+    //                 whole file
+    //   "selection" - only the selected text
+    //   "file"      - always the whole file
+    "source": "auto"
+}

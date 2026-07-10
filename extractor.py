@@ -110,19 +110,25 @@ _MONTHS = (
     r"Aug(?:ust)?|Sep(?:t(?:ember)?)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?"
 )
 
+# The year field is restricted to exactly 2 or 4 digits (never 3) so a 3-digit
+# IPv4 octet such as the "0.0.255" inside 10.0.0.255 is not read as a date, and
+# the trailing (?!:) stops a clock time (12:00) from being taken as a date.
 DATE_RE = re.compile(
     r"\b(?:"
     r"\d{4}-\d{2}-\d{2}|"
     r"\d{4}/\d{2}/\d{2}|"
-    r"\d{1,2}[/.\-]\d{1,2}[/.\-]\d{2,4}|"
-    r"(?:" + _MONTHS + r")\.?\s+\d{1,2}(?:st|nd|rd|th)?,?\s+\d{2,4}|"
-    r"\d{1,2}(?:st|nd|rd|th)?\s+(?:" + _MONTHS + r")\.?,?\s+\d{2,4}"
-    r")\b",
+    r"\d{1,2}[/.\-]\d{1,2}[/.\-](?:\d{4}|\d{2})|"
+    r"(?:" + _MONTHS + r")\.?\s+\d{1,2}(?:st|nd|rd|th)?,?\s+(?:\d{4}|\d{2})|"
+    r"\d{1,2}(?:st|nd|rd|th)?\s+(?:" + _MONTHS + r")\.?,?\s+(?:\d{4}|\d{2})"
+    r")\b(?!:)",
     re.IGNORECASE,
 )
 
+# Hours 00-23, minutes/seconds 00-59, so invalid clock values (e.g. 30:00)
+# are not reported.
 TIME_RE = re.compile(
-    r"\b\d{1,2}:\d{2}(?::\d{2})?(?:\.\d{1,6})?\s?(?:[AaPp]\.?\s?[Mm]\.?)?(?!\d)"
+    r"(?<!\.)\b(?:[01]?\d|2[0-3]):[0-5]\d(?::[0-5]\d)?(?:\.\d{1,6})?"
+    r"\s?(?:[AaPp]\.?\s?[Mm]\.?)?(?!\d)"
 )
 
 TIMESTAMP_RE = re.compile(
@@ -136,10 +142,13 @@ TIMESTAMP_RE = re.compile(
     re.IGNORECASE,
 )
 
+# Windows/UNC path segments stop at whitespace, commas and semicolons so a path
+# in prose does not swallow the following words. (Paths containing spaces are
+# therefore captured only up to the first space.)
 PATH_RE = re.compile(
     r"(?:"
-    r"[A-Za-z]:\\(?:[^\\/:*?\"<>|\r\n]+\\?)*|"
-    r"\\\\[^\\/:*?\"<>|\r\n]+(?:\\[^\\/:*?\"<>|\r\n]+)*|"
+    r"[A-Za-z]:\\(?:[^\\/:*?\"<>|\s,;]+\\?)*|"
+    r"\\\\[^\\/:*?\"<>|\s,;]+(?:\\[^\\/:*?\"<>|\s,;]+)*|"
     r"(?<![\w:/])(?:~|\.{1,2})?/(?:[\w.\-]+/?)+"
     r")"
 )
@@ -218,6 +227,12 @@ def _luhn_ok(digits):
     return total % 10 == 0
 
 
+def _matches_whole(regex, s):
+    """True if *regex* matches the entire string *s* (re.fullmatch is 3.4+)."""
+    m = regex.match(s)
+    return bool(m) and m.end() == len(s)
+
+
 def _registrable_domain(host):
     host = host.lower().rstrip(".")
     if host == "localhost" or ":" in host:
@@ -270,8 +285,23 @@ def extract_phones(text):
     for m in PHONE_RE.finditer(text):
         raw = m.group(0).strip()
         digits = re.sub(r"\D", "", raw)
-        if 7 <= len(digits) <= 15:
-            out.append(raw)
+        if not (7 <= len(digits) <= 15):
+            continue
+        # Require a phone-like shape: a leading "+" or grouping separators.
+        # This drops bare digit runs (epochs, ids) that are indistinguishable
+        # from unformatted phone numbers.
+        if "+" not in raw and not re.search(r"[ ().\-]", raw):
+            continue
+        # Reject tokens that are really an IPv4 address or a date.
+        if _matches_whole(IPV4_RE, raw) or _matches_whole(DATE_RE, raw):
+            continue
+        # Reject ISO date / timestamp prefixes (2024-01-31 ...).
+        if re.search(r"\d{4}-\d\d-\d\d", raw):
+            continue
+        # Reject card-like runs of equal 4-digit groups (4111 1111 1111).
+        if re.match(r"^(?:\d{4}[ \-]){2,}\d{4}$", raw):
+            continue
+        out.append(raw)
     return out
 
 

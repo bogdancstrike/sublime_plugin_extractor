@@ -1,0 +1,62 @@
+[
+    {
+        "id": "tools",
+        "children": [
+            {
+                "caption": "Extractor",
+                "children": [
+                    { "caption": "Extract to new file…", "command": "extractor" },
+                    { "caption": "-" },
+                    { "caption": "Emails", "command": "extractor", "args": { "kind": "emails" } },
+                    { "caption": "URLs", "command": "extractor", "args": { "kind": "urls" } },
+                    { "caption": "Domains", "command": "extractor", "args": { "kind": "domains" } },
+                    { "caption": "Hostnames", "command": "extractor", "args": { "kind": "hostnames" } },
+                    { "caption": "IPv4 addresses", "command": "extractor", "args": { "kind": "ipv4" } },
+                    { "caption": "IPv6 addresses", "command": "extractor", "args": { "kind": "ipv6" } },
+                    { "caption": "Ports", "command": "extractor", "args": { "kind": "ports" } },
+                    { "caption": "Phone numbers", "command": "extractor", "args": { "kind": "phone_numbers" } },
+                    { "caption": "Dates", "command": "extractor", "args": { "kind": "dates" } },
+                    { "caption": "Times", "command": "extractor", "args": { "kind": "times" } },
+                    { "caption": "Timestamps", "command": "extractor", "args": { "kind": "timestamps" } },
+                    { "caption": "File paths", "command": "extractor", "args": { "kind": "file_paths" } },
+                    { "caption": "UUIDs", "command": "extractor", "args": { "kind": "uuids" } },
+                    { "caption": "MAC addresses", "command": "extractor", "args": { "kind": "mac_addresses" } },
+                    { "caption": "Hex colors", "command": "extractor", "args": { "kind": "hex_colors" } },
+                    { "caption": "Numbers", "command": "extractor", "args": { "kind": "numbers" } },
+                    { "caption": "Hashtags", "command": "extractor", "args": { "kind": "hashtags" } },
+                    { "caption": "Mentions", "command": "extractor", "args": { "kind": "mentions" } },
+                    { "caption": "Credit card numbers", "command": "extractor", "args": { "kind": "credit_cards" } },
+                    { "caption": "Secrets & API keys", "command": "extractor", "args": { "kind": "secrets" } },
+                    { "caption": "Markdown link URLs", "command": "extractor", "args": { "kind": "markdown_links" } },
+                    { "caption": "-" },
+                    { "caption": "Custom regex…", "command": "extractor", "args": { "kind": "regex" } }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "preferences",
+        "children": [
+            {
+                "caption": "Package Settings",
+                "mnemonic": "P",
+                "id": "package-settings",
+                "children": [
+                    {
+                        "caption": "Extractor",
+                        "children": [
+                            {
+                                "caption": "Settings",
+                                "command": "edit_settings",
+                                "args": {
+                                    "base_file": "${packages}/Extractor/Extractor.sublime-settings",
+                                    "default": "{\n\t$0\n}\n"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

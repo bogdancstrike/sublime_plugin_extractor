@@ -1,0 +1,21 @@
+# Python bytecode (Package Control rejects packages containing .pyc files)
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Package Control generates this automatically; it must not be committed
+package-metadata.json
+
+# Sublime Text workspace files
+*.sublime-workspace
+
+# OS cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor/IDE
+.idea/
+.vscode/
+*.swp
+*~
