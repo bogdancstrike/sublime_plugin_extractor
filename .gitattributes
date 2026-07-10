@@ -1,0 +1,3 @@
+# Keep non-functional files out of the package Package Control builds from tags.
+.gitignore export-ignore
+.gitattributes export-ignore

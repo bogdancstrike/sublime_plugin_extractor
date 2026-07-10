@@ -12,7 +12,6 @@ Getting started
 
 You can also reach every extractor from:
   * Tools > Extractor
-  * the right-click context menu (Extract)
   * direct Command Palette entries, e.g. "Extractor: Emails"
 
 Settings

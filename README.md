@@ -39,7 +39,6 @@ Prefer fewer clicks? Every extractor also has:
 
 - a **direct** Command Palette entry, e.g. `Extractor: Emails`
 - an item under **Tools → Extractor**
-- an item in the **right-click** context menu (**Extract**)
 
 > 💡 By default Extractor reads the whole file, or just your selection when you
 > have one. Change this under *Preferences → Package Settings → Extractor → Settings*.

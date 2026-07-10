@@ -21,5 +21,13 @@
     { "caption": "Extractor: Credit card numbers", "command": "extractor", "args": { "kind": "credit_cards" } },
     { "caption": "Extractor: Secrets & API keys", "command": "extractor", "args": { "kind": "secrets" } },
     { "caption": "Extractor: Markdown link URLs", "command": "extractor", "args": { "kind": "markdown_links" } },
-    { "caption": "Extractor: Custom regex…", "command": "extractor", "args": { "kind": "regex" } }
+    { "caption": "Extractor: Custom regex…", "command": "extractor", "args": { "kind": "regex" } },
+    {
+        "caption": "Extractor: Settings",
+        "command": "edit_settings",
+        "args": {
+            "base_file": "${packages}/Extractor/Extractor.sublime-settings",
+            "default": "{\n\t$0\n}\n"
+        }
+    }
 ]
