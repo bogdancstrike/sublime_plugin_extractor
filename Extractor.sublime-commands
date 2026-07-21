@@ -23,7 +23,7 @@
     { "caption": "Extractor: Markdown link URLs", "command": "extractor", "args": { "kind": "markdown_links" } },
     { "caption": "Extractor: Custom regex…", "command": "extractor", "args": { "kind": "regex" } },
     {
-        "caption": "Extractor: Settings",
+        "caption": "Preferences: Extractor Settings",
         "command": "edit_settings",
         "args": {
             "base_file": "${packages}/Extractor/Extractor.sublime-settings",
